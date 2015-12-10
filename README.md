@@ -24,7 +24,7 @@
 Installing SevenUpLive
 
 1. You MUST have Live 8.2.2+ and Max For Live (MAX ver 5.1.8+) to run SevenUp 2.0.5 and greater.
-2.0.5 is compatible with MAX6 now as well.
+2.0.5 is compatible with MAX6+ now as well. (32 bit versions only at the moment due to zeroconf plugin 32bit only) TODO: need 64 bit version
 
 2. Copy all jar files in the ./supporting folder into your MAX Java classpath.
 The easiest way to do this is to copy them directly into the MAX distribution. 
@@ -36,9 +36,6 @@ For example:
 To get started, follow the instructions in the documentation here.
 http://www.makingthenoise.com/sevenup/
 
-NOTE: Source code is provided here for convenience. 
-There is no build file provided. In order to get a full source tree along 
-with the ant build files. Please checkout the code from the repository here.
-
+This code was originally hosted at 
 http://code.google.com/p/sevenuplive/
  
