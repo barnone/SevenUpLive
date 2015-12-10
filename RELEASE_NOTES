@@ -1,0 +1,82 @@
+v2.0.5
+
+7up supports MAX5 and MAX6 now.
+
+- Two versions of SevenUpCore. SevenUpCore from 2.0.4 is now SevenUpCoreClassic
+and has old style connection dialog. This version support use with Monomeserial,
+and all routers that were designed to work with v1 protocol. New SevenUpCore is 
+designed to work with serialosc and v2 protocol. You need to install zeroconf MAX
+externals for your platform first. This connection is very slick as monomes are 
+autodetected on the network and configured automatically including detection of
+monome size. Rotation, intensity can be altered on the fly while running.
+
+- Added velocity support to Melodizers
+On melodizer 1, midi input to ch9 on track that SevenUpCore is in will record 
+notes to pattern recorders. Velocity will now be recorded as well. 
+
+There are three custom OSC protocol messages specific to 7up and not included 
+in the monome osc protocol.
+
+For v1 classic protocol these are
+
+/refresh - Force 7up to redraw the entire surface, rather than the 
+standard draw mode that only redraws what has changed. This was needed for 
+manta support, because we move the draw window and need a way to force a full
+redraw.
+
+Multi-level led support for v2 monomes. Monomes that support multi-intensity leds 
+can use this mode which is very friendly on the bandwidth since it trades fast
+blinks for led levels. Current pattern still fast blinks. Record enable still 
+slow binks.
+
+- Added Manta Support. Must have a v2 Manta with dual color leds. Choose mantav2 
+from SevenUpCoreClassic pick list. Must drop Manta7up.amxd into your Live set 
+somewhere. Choose "connect" to connect to the Manta first before starting 7up.
+
+Tilt support added for serialosc
+
+/xpress x y v - Same as /press but with extra param for velocity.
+if you send osc button press messages to SevenUp and add an extra integer OSC 
+param at the end, SevenUp will interpret this as velocity input. 
+This is how the manta patch works, an app could also use an ARC or encoder 
+to modify the velocity range and send this with button presses.
+
+The messages are slightly different when using v2 serialosc protocol since the 
+path look slightly different in v2 messages.
+ 
+/grid/refresh
+/grid/xkey x y v 
+
+BUG FIXES
+
+Fixed tilt support for gs128. For some reason the protocol type tags were 
+different for the gs128. Anyway, it works now.
+
+Fixed loop recorder bug where choke group interactions were not being properly 
+recorded.
+
+Fixed SevenUpCoreClass host/listen port configuration did not allow for ports 
+above 9999. Now can go up to 400000.
+
+Fixed clip launcher being a resource hog by not polling anymore but using 
+observers instead.
+
+Users wanted blink modes switched on clip launcher since fast blink was used for 
+all inactive clips and that meant lots of blinking and almost unusable. So now
+the fast blink is for playing and solid for not playing.
+
+
+
+
+
+
+
+   
+
+
+
+
+
+ 
+
+

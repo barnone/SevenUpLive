@@ -1,0 +1,35 @@
+FEATURES
+
+-External controller to start/stop recording
+- Load Scales from XML Files
+- Ability to load a melodizer scales from an XML file and have it associated with a custom name and appear in the pick list. 
+- XML improvements like XML validation of patches...pretty printing of XML so it is easier to edit.
+- Controller Page
+- Ability to send all control changes when moving between control pages.
+- More quantization options
+	Ability to start/stop loops and loop recorder slot quantized to step or bar. 
+	Use the navcol start/stop and masterizer start/stop buttons only. Still allow triggering of loop steps unquantized. If launching from quantized button then chokes are also quantized.
+- Mute capabilities + Sub Mixing of Loop Tracks  
+
+BUGS
+- When loading a patch, patternizers do not update their UI until you move away from page and come back again
+- SamplePatchPack.xml is not really a patch pack. Needs to be updated.
+- Check "NextPatch" clip in template...It was sending an F3 instead of the F4 needed to change the patch. 
+- There was a bug report that loop pattern recorder was not replaying loops that used choke groups properly. This may have to do
+which where new notes are triggered or not depending on loop mode. - Fixed 2.0.5
+- Bug in melodizer code where the first note may not be played directly after recording a sequence and another note is held down
+- Bug reported where pattern slots in Masterizer are not clearer when the pattern is dropped (recorded as empty) in a Melodizer. - FIXED 1.4 beta 4
+- Send note OFFS when switching patches mid-stride
+- Tilt not working with gs128 - Fixed 2.0.5
+
+===
+
+v2.0 MFL Specific
+===
+FEATURES
+- Move loop type/length/chop group mapping to the individual looper device (to allow for multiple looper devices in the future)
+- Create a "resampler" object that would be audio effect that captures sound in real time and loads it into a designated looper slot in real time.  This would require us to create our own custom Simpler object that is hooked into this. 
+- Rename all references from SevenUp to 7up
+- SevenUpClip very inefficient as polls live set for new or moved clips. Must instead use observers or other mechanism to use less resources. - Fixed 2.0.5
+-Add a check to make sure user installed the java classes correctly and provide output in either the max window or in the UI to notify the user 
+

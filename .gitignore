@@ -1,0 +1,9 @@
+.svn
+.class
+.project
+.classpath
+target
+bin
+dist
+out
+.DS_Store

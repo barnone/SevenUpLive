@@ -1,0 +1,137 @@
+<?xml version="1.0"?>
+
+<project name="SevenUpLive" default="default" basedir=".">
+
+  <target name="default">
+  	<echo>Usage: ant &lt;target&gt;</echo>
+  	<echo>Targets:</echo>
+  	<echo>build: build the code</echo>
+  	<echo>jar: build the jar file</echo>
+  	<echo>zipsrc: build the zipped source file</echo>
+  	<echo>docs: build the documentation</echo>
+  	<echo>dist: build the entire distribution</echo>
+  	<echo>clean: clean the build</echo>
+  </target>	
+  
+  <target name="_init">
+    <property environment="env" />
+    <property file="./build.properties" />
+  	
+  	<mkdir dir="${bin.folder}" />
+  	<mkdir dir="${out.folder}" />
+  	
+  	<echo>Locations in build</echo>
+  	<echo>Sources=${src.folder}</echo>
+  	<echo>M4L Sources=${max.folder}</echo>
+  	<echo>Libraries=${lib.folder}</echo>
+  	<echo>Binaries=${bin.folder}</echo>
+  	<echo>Distribution=${dist.folder}</echo>
+  	<echo></echo>
+  	
+  	<echo>Libraries in build</echo>
+  	<echo>${core.jar}</echo>
+  	<echo>${jdom.jar}</echo>
+  	<echo>${oscP5.jar}</echo>
+  	<echo>${proxml.jar}</echo>
+  	  	
+    <path id="sevenup.classpath">
+    	<fileset file="${lib.folder}/${core.jar}"/>
+		<fileset file="${lib.folder}/${jdom.jar}"/>
+		<fileset file="${lib.folder}/${oscP5.jar}"/>
+		<fileset file="${lib.folder}/${proxml.jar}"/>
+    	<fileset file="${MAX_HOME}/${max.jar}"/>
+	</path>
+	
+  </target>
+
+	
+  <target name="build" depends="_init">
+    <!-- Build as 1.5 source for Compatibility reasons -->
+  	<javac srcdir="${src.folder}" destdir="${bin.folder}" classpathref="sevenup.classpath" source="1.5" target="1.5"/>
+  </target>
+
+  <target name="clean" depends="_init">
+    <delete quiet="false" dir="${bin.folder}" />
+    <delete quiet="false" dir="${dist.folder}" />
+    <delete quiet="false" dir="${out.folder}" />
+  </target>
+	
+  <target name="_makedistdirs">
+    <mkdir dir="${out.folder}/supporting"/>
+  	<mkdir dir="${out.folder}/components"/>
+  </target>
+	  	
+  
+  <target name="jar" depends="build, _makedistdirs">
+    <jar jarfile="${out.folder}/supporting/SevenUpLive-${release.version}.jar">
+        <fileset dir="${bin.folder}"/>
+        <manifest>
+            <attribute name="Class-Path" value="${core.jar} ${jdom.jar} ${oscP5.jar} ${proxml.jar}"/>
+        </manifest>
+    </jar>
+  </target>
+  
+  <target name="zipsrc" depends="_init, _makedistdirs">
+    <jar jarfile="${out.folder}/SevenUpLive-${release.version}-src.zip">
+        <fileset dir=".">
+            <include name="README"/>
+            <include name="COPYING"/>
+            <include name="COPYING.LESSER"/>
+        	<include name="components/**"/>
+        </fileset>
+        <fileset dir="${src.folder}"/>
+        <fileset dir="${max.folder}"/>
+    </jar>
+  </target>
+  
+  <target name="doc" depends="_init">
+  	<mkdir dir="${out.folder}/doc"/>
+    <copy todir="${out.folder}/doc" flatten="false">
+        <fileset dir="${doc.folder}"/>
+    </copy>
+  </target>
+  
+  <target name="dist" depends="jar, zipsrc, doc">
+    <mkdir dir="${dist.folder}"/>
+    
+    <copy todir="${out.folder}" flatten="false">
+  	  	<fileset dir="${resources.folder}/content">
+  	  		<include name="*.*"/>
+  		</fileset>
+  	</copy>
+  
+  	<copy todir="${out.folder}/components" flatten="false">
+  	  	<fileset dir="./components">
+  			<include name="*.*"/>
+  		</fileset>
+  	</copy>
+  	
+  	<copy todir="${out.folder}" flatten="false">
+  		<fileset dir="${resources.folder}/content">
+  	  		<include name="*.*"/>
+  	    </fileset>
+  	    <fileset dir=".">
+            <include name="README"/>
+            <include name="COPYING"/>
+            <include name="COPYING.LESSER"/>
+        </fileset>
+  	</copy>
+  		
+  	<copy todir="${out.folder}/supporting" flatten="false">
+        <fileset dir="${lib.folder}">
+            <include name="${core.jar}"/>
+            <include name="${jdom.jar}"/>
+            <include name="${oscP5.jar}"/>
+            <include name="${proxml.jar}"/>
+        	<include name="SevenUpLive-${release.version}.jar"/>
+        </fileset>
+    </copy>
+  	
+    <!-- Now zip everything into a distribution -->
+    <jar jarfile="${dist.folder}/SevenUpLive-${release.version}.zip">
+        <fileset dir="${out.folder}"/>
+    </jar>
+    
+  </target>
+  
+</project>
