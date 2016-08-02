@@ -37,5 +37,5 @@ To get started, follow the instructions in the documentation here.
 http://www.makingthenoise.com/sevenup/
 
 This code was originally hosted at 
-http://code.google.com/p/sevenuplive/
+https://code.google.com/archive/p/sevenuplive/source/default/commits
  
